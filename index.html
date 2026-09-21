@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>MoneyBot Runner</title>
+<!-- Keep IMG_0178-removebg-preview.png in the same folder as this HTML (GitHub or local). -->
+<link rel="icon" href="IMG_0178-removebg-preview.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@600;700&display=swap" rel="stylesheet" />
@@ -19,7 +21,6 @@
   --green-ink: #166534;
   --cream: #fefcf6;
   --mint: #e6fcf5;
-  --blue: #dbeafe;
   --coin: #f59e0b;
   --coin-bg: #fef3c7;
   --coin-ink: #92600a;
@@ -40,7 +41,7 @@
   --sh-card: 0 2px 8px rgba(0, 0, 0, 0.06);
   --sh-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --sh-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --rc: 16px;
+  --rc: 18px;
 }
 
 * { box-sizing: border-box; }
@@ -65,21 +66,38 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 16px;
-  gap: 14px;
+  padding: 14px;
+  gap: 12px;
 }
 
-.brand { text-align: center; }
+.brand {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-row img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(17, 94, 89, 0.15));
+}
 .brand h1 {
   margin: 0;
   font-family: var(--font-serif);
-  font-size: clamp(22px, 5vw, 34px);
+  font-size: clamp(22px, 5vw, 32px);
   color: var(--teal-dark);
   letter-spacing: -0.02em;
 }
 .brand h1 span { color: var(--green-hover); }
 .brand p {
-  margin: 6px 0 0;
+  margin: 0;
   font-size: 13px;
   color: var(--g500);
   font-weight: 500;
@@ -101,11 +119,12 @@ canvas {
   height: auto;
   cursor: pointer;
   touch-action: none;
+  background: linear-gradient(180deg, #f7fffb 0%, #fefcf6 55%, #eef8f3 100%);
 }
 
 .hud {
   position: absolute;
-  inset: 12px 14px auto 14px;
+  inset: 10px 12px auto 12px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -114,19 +133,19 @@ canvas {
   z-index: 2;
   flex-wrap: wrap;
 }
-.hud-left, .hud-right { display: flex; gap: 8px; flex-wrap: wrap; }
+.hud-left, .hud-right { display: flex; gap: 6px; flex-wrap: wrap; }
 .pill {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   border: 1px solid var(--g200);
   border-radius: 9999px;
-  padding: 6px 12px;
+  padding: 6px 11px;
   font-size: 12px;
   font-weight: 700;
   color: var(--teal);
   box-shadow: var(--sh-card);
   backdrop-filter: blur(6px);
 }
-.pill .label { color: var(--g500); font-weight: 600; margin-right: 6px; }
+.pill .label { color: var(--g500); font-weight: 600; margin-right: 5px; }
 .pill.coin { color: var(--coin-ink); }
 .pill.coin .dot {
   display: inline-block;
@@ -136,7 +155,10 @@ canvas {
   background: var(--coin);
   margin-right: 6px;
 }
-.pill.brain { color: var(--teal-dark); background: rgba(230, 252, 245, 0.95); }
+.pill.wins {
+  color: var(--teal-dark);
+  background: rgba(230, 252, 245, 0.96);
+}
 
 .overlay {
   position: absolute;
@@ -144,29 +166,34 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(254, 252, 246, 0.78);
-  backdrop-filter: blur(5px);
+  background: rgba(254, 252, 246, 0.82);
+  backdrop-filter: blur(6px);
   z-index: 3;
-  padding: 16px;
+  padding: 14px;
   overflow-y: auto;
 }
-.overlay.hidden { display: none; }
+.overlay.hidden { display: none !important; }
 
 .card {
   width: min(400px, 100%);
   background: #fff;
   border: 1px solid var(--g200);
-  border-radius: 20px;
+  border-radius: 22px;
   box-shadow: var(--sh-lg);
-  padding: 26px 22px 20px;
+  padding: 24px 22px 20px;
   text-align: center;
 }
-.card.quiz { width: min(460px, 100%); text-align: left; }
-.card .bot {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 14px;
+.card.quiz {
+  width: min(480px, 100%);
+  text-align: left;
+}
+.card .hero-bot {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 12px;
   display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(17, 94, 89, 0.18));
 }
 .card h2 {
   margin: 0;
@@ -179,7 +206,7 @@ canvas {
   margin: 10px 0 0;
   color: var(--g600);
   font-size: 14px;
-  line-height: 1.45;
+  line-height: 1.5;
   text-align: center;
 }
 .card .stats {
@@ -205,6 +232,22 @@ canvas {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+
+.how {
+  margin: 14px 0 0;
+  display: grid;
+  gap: 6px;
+  text-align: left;
+}
+.how li {
+  list-style: none;
+  background: var(--g100);
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--g600);
+  font-weight: 600;
 }
 
 .quiz-badge {
@@ -297,7 +340,13 @@ canvas {
   color: #991b1b;
   border: 1px solid rgba(239, 68, 68, 0.3);
 }
-.explain strong { display: block; margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+.explain strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
 
 .btn {
   margin-top: 16px;
@@ -328,7 +377,7 @@ canvas {
 .milestone {
   position: absolute;
   left: 50%;
-  top: 56px;
+  top: 52px;
   transform: translateX(-50%);
   z-index: 2;
   pointer-events: none;
@@ -342,6 +391,7 @@ canvas {
   box-shadow: var(--sh-card);
   opacity: 0;
   transition: opacity 0.25s;
+  white-space: nowrap;
 }
 .milestone.show { opacity: 1; }
 
@@ -369,15 +419,18 @@ canvas {
 <body>
   <div class="wrap">
     <div class="brand">
-      <h1>MoneyBot <span>Runner</span></h1>
-      <p>Dodge debt traps · Collect good habits · Pass brain checks</p>
+      <div class="brand-row">
+        <img src="IMG_0178-removebg-preview.png" alt="" width="42" height="42" />
+        <h1>MoneyBot <span>Runner</span></h1>
+      </div>
+      <p>Dodge debt traps. Collect good habits. Pass brain checks.</p>
     </div>
 
     <div class="stage" id="stage">
       <div class="hud">
         <div class="hud-left">
           <div class="pill coin"><span class="dot"></span><span class="label">Score</span><span id="scoreEl">0</span></div>
-          <div class="pill brain"><span class="label">Wins</span><span id="smartEl">0</span>/<span id="askedEl">0</span></div>
+          <div class="pill wins"><span class="label">Wins</span><span id="smartEl">0</span>/<span id="askedEl">0</span></div>
         </div>
         <div class="hud-right">
           <div class="pill"><span class="label">Next Q</span><span id="nextQEl">800</span></div>
@@ -385,24 +438,19 @@ canvas {
         </div>
       </div>
 
-      <div class="milestone" id="milestone">Brain check incoming…</div>
-
-      <canvas id="game" width="920" height="320" aria-label="MoneyBot Runner game"></canvas>
+      <div class="milestone" id="milestone">Brain check incoming</div>
+      <canvas id="game" width="920" height="340" aria-label="MoneyBot Runner game"></canvas>
 
       <div class="overlay" id="startOverlay">
         <div class="card">
-          <svg class="bot" viewBox="0 0 80 80" aria-hidden="true">
-            <circle cx="40" cy="42" r="34" fill="#1f2937"/>
-            <rect x="18" y="20" width="44" height="40" rx="10" fill="#fff"/>
-            <rect x="24" y="28" width="32" height="22" rx="6" fill="#374151"/>
-            <rect x="28" y="32" width="8" height="14" rx="3" fill="#4ade80"/>
-            <rect x="44" y="32" width="8" height="14" rx="3" fill="#4ade80"/>
-            <path d="M32 48 Q40 54 48 48" stroke="#4ade80" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <line x1="40" y1="12" x2="40" y2="20" stroke="#111827" stroke-width="2"/>
-            <circle cx="40" cy="10" r="5" fill="#f59e0b" stroke="#92600a" stroke-width="1"/>
-          </svg>
+          <img class="hero-bot" src="IMG_0178-removebg-preview.png" alt="MoneyBot" />
           <h2>Ready to run?</h2>
-          <p>Jump over late fees and credit traps. MoneyBot pauses for brain checks as you go — gaps get longer as the run gets faster. Nail them for a bonus!</p>
+          <p>Help MoneyBot dodge late fees and credit traps. Brain checks pop up as you go, and the gaps get longer when the run gets faster.</p>
+          <ul class="how">
+            <li>Jump over fees, credit cards, and piggy traps</li>
+            <li>Duck under flying dollar bills</li>
+            <li>Grab gold coins, then nail brain checks for +100</li>
+          </ul>
           <button class="btn" id="startBtn" type="button">Start Run</button>
         </div>
       </div>
@@ -419,8 +467,9 @@ canvas {
 
       <div class="overlay hidden" id="overOverlay">
         <div class="card">
+          <img class="hero-bot" src="IMG_0178-removebg-preview.png" alt="MoneyBot" style="width:72px;height:72px;" />
           <h2>Budget busted!</h2>
-          <p>MoneyBot hit an obstacle. Review your run and try again.</p>
+          <p>MoneyBot hit an obstacle. Dust off and try again.</p>
           <div class="stats">
             <div class="stat"><b id="finalScore">0</b><span>Score</span></div>
             <div class="stat"><b id="finalSmart">0</b><span>Wins</span></div>
@@ -433,12 +482,14 @@ canvas {
     </div>
 
     <p class="hint">
-      Jump <kbd>Space</kbd> / <kbd>↑</kbd> / tap · Duck <kbd>↓</kbd> · Brain checks scale up as you speed · Correct = +100 bonus
+      Jump <kbd>Space</kbd> / <kbd>↑</kbd> / tap · Duck <kbd>↓</kbd> · Brain checks scale up as you speed · Correct = +100
     </p>
   </div>
 
 <script>
 (() => {
+  const BOT_SRC = 'IMG_0178-removebg-preview.png';
+
   const canvas = document.getElementById('game');
   const ctx = canvas.getContext('2d');
   const scoreEl = document.getElementById('scoreEl');
@@ -461,11 +512,16 @@ canvas {
 
   const W = canvas.width;
   const H = canvas.height;
-  const GROUND_Y = H - 54;
-  const STORAGE_KEY = 'moneybot-runner-best-v2';
+  const GROUND_Y = H - 58;
+  const STORAGE_KEY = 'moneybot-runner-best-v3';
   const QUIZ_BONUS = 100;
 
-  /** Gap before next brain check grows with each check + current speed (capped). */
+  const botImg = new Image();
+  let botReady = false;
+  botImg.onload = () => { botReady = true; };
+  botImg.onerror = () => { botReady = false; };
+  botImg.src = BOT_SRC;
+
   function quizGap(checksDone, speed) {
     const base = 800;
     const growth = Math.pow(1.35, checksDone);
@@ -492,161 +548,41 @@ canvas {
   };
 
   const QUESTIONS = [
-    {
-      q: 'What is a budget?',
-      choices: [
-        'A plan for how you earn, spend, and save money',
-        'A type of credit card',
-        'A loan from a bank',
-        'A tax you pay once a year',
-      ],
-      answer: 0,
-      tip: 'A budget is your money roadmap — income in, priorities out, savings included.',
-    },
-    {
-      q: 'Interest on a savings account usually…',
-      choices: [
-        'Costs you money every month',
-        'Pays you a little for keeping money saved',
-        'Only works if you have a credit card',
-        'Is the same as a late fee',
-      ],
-      answer: 1,
-      tip: 'Banks pay you interest for parking your money with them. Debt interest is the opposite — you pay them.',
-    },
-    {
-      q: 'Which is generally the smartest first move with leftover money?',
-      choices: [
-        'Spend it all on the newest phone',
-        'Ignore it until next year',
-        'Save an emergency stash, then set goals',
-        'Lend it to strangers online',
-      ],
-      answer: 2,
-      tip: 'Build a small emergency fund first, then save toward goals. Future-you will thank present-you.',
-    },
-    {
-      q: 'A “late fee” usually happens when you…',
-      choices: [
-        'Pay a bill after the due date',
-        'Open a new savings account',
-        'Deposit a paycheck early',
-        'Compare prices before buying',
-      ],
-      answer: 0,
-      tip: 'Pay on time (or set reminders). Late fees are pure money leaks — jump over them in real life too.',
-    },
-    {
-      q: 'Needs vs wants: which one is a need?',
-      choices: [
-        'Limited-edition sneakers',
-        'Basic groceries and school supplies',
-        'A third streaming subscription',
-        'Buying snacks because you’re bored',
-      ],
-      answer: 1,
-      tip: 'Needs keep you safe, healthy, and able to function. Wants are nice — just budget for them.',
-    },
-    {
-      q: 'What does “credit” usually mean when talking about a credit card?',
-      choices: [
-        'Money you already fully own in cash',
-        'Borrowed money you agree to pay back',
-        'A gift card that never expires',
-        'A coupon for free shipping',
-      ],
-      answer: 1,
-      tip: 'Credit = borrow now, repay later. Miss payments and interest + fees can stack fast.',
-    },
-    {
-      q: 'Why do people often recommend comparing prices?',
-      choices: [
-        'It makes shopping slower for no reason',
-        'Stores are legally required to match any price',
-        'You can stretch the same money further',
-        'It raises your credit score automatically',
-      ],
-      answer: 2,
-      tip: 'Same item, different price = free savings. Comparing is one of the easiest money skills.',
-    },
-    {
-      q: 'An emergency fund is mainly for…',
-      choices: [
-        'Impulse shopping weekends',
-        'Unexpected expenses (like a broken phone)',
-        'Paying only entertainment bills',
-        'Investing in meme coins',
-      ],
-      answer: 1,
-      tip: 'Emergencies are unplanned. A small cash cushion means you don’t have to swipe credit in a panic.',
-    },
-    {
-      q: 'If something is “on sale” for 20% off a $50 item, you pay…',
-      choices: ['$20', '$30', '$40', '$45'],
-      answer: 2,
-      tip: '20% of $50 is $10. $50 − $10 = $40. Quick percent math saves real cash.',
-    },
-    {
-      q: 'What’s a healthy habit with subscriptions?',
-      choices: [
-        'Keep every free trial forever',
-        'Never check what you’re paying monthly',
-        'Review and cancel ones you don’t use',
-        'Share passwords publicly to split costs',
-      ],
-      answer: 2,
-      tip: 'Tiny monthly charges add up. Audit subscriptions the way MoneyBot dodges fees.',
-    },
-    {
-      q: 'Saving $5 a week for a year is about…',
-      choices: ['$60', '$120', '$260', '$520'],
-      answer: 2,
-      tip: '$5 × 52 weeks ≈ $260. Small, consistent deposits beat rare big ones.',
-    },
-    {
-      q: 'Which choice best describes “living below your means”?',
-      choices: [
-        'Spending more than you earn',
-        'Spending less than you earn and saving the rest',
-        'Only using credit cards',
-        'Never buying anything fun',
-      ],
-      answer: 1,
-      tip: 'Earn more than you spend → the gap can become savings, goals, and freedom.',
-    },
-    {
-      q: 'A debit card typically spends…',
-      choices: [
-        'Money from your own bank account',
-        'Unlimited borrowed money',
-        'Only gift-card balances',
-        'Your friend’s account automatically',
-      ],
-      answer: 0,
-      tip: 'Debit = your money. Credit = borrowed money. Knowing the difference prevents surprise debt.',
-    },
-    {
-      q: 'What’s the main risk of only making minimum credit-card payments?',
-      choices: [
-        'Your card gets prettier',
-        'Interest can make the balance grow slowly for a long time',
-        'Stores give you free products',
-        'Your savings interest doubles',
-      ],
-      answer: 1,
-      tip: 'Minimums keep the account “okay,” but interest can turn a small purchase into a long, expensive run.',
-    },
-    {
-      q: 'Goal tip: “pay yourself first” means…',
-      choices: [
-        'Buy yourself something before any bills',
-        'Save a set amount as soon as you get paid',
-        'Skip lunch to afford extras',
-        'Ask parents for every purchase',
-      ],
-      answer: 1,
-      tip: 'Treat savings like a non-negotiable bill. Automate it if you can — MoneyBot would.',
-    },
+    { q: 'What is a budget?', choices: ['A plan for how you earn, spend, and save money', 'A type of credit card', 'A loan from a bank', 'A tax you pay once a year'], answer: 0, tip: 'A budget is your money roadmap: income in, priorities out, savings included.' },
+    { q: 'Interest on a savings account usually…', choices: ['Costs you money every month', 'Pays you a little for keeping money saved', 'Only works if you have a credit card', 'Is the same as a late fee'], answer: 1, tip: 'Banks pay you interest for parking your money with them. Debt interest is the opposite.' },
+    { q: 'Which is generally the smartest first move with leftover money?', choices: ['Spend it all on the newest phone', 'Ignore it until next year', 'Save an emergency stash, then set goals', 'Lend it to strangers online'], answer: 2, tip: 'Build a small emergency fund first, then save toward goals.' },
+    { q: 'A late fee usually happens when you…', choices: ['Pay a bill after the due date', 'Open a new savings account', 'Deposit a paycheck early', 'Compare prices before buying'], answer: 0, tip: 'Pay on time or set reminders. Late fees are pure money leaks.' },
+    { q: 'Needs vs wants: which one is a need?', choices: ['Limited-edition sneakers', 'Basic groceries and school supplies', 'A third streaming subscription', 'Buying snacks because you are bored'], answer: 1, tip: 'Needs keep you safe, healthy, and able to function. Wants are nice. Just budget for them.' },
+    { q: 'What does credit usually mean on a credit card?', choices: ['Money you already fully own in cash', 'Borrowed money you agree to pay back', 'A gift card that never expires', 'A coupon for free shipping'], answer: 1, tip: 'Credit means borrow now, repay later. Miss payments and interest plus fees can stack fast.' },
+    { q: 'Why do people often recommend comparing prices?', choices: ['It makes shopping slower for no reason', 'Stores are legally required to match any price', 'You can stretch the same money further', 'It raises your credit score automatically'], answer: 2, tip: 'Same item, different price equals free savings.' },
+    { q: 'An emergency fund is mainly for…', choices: ['Impulse shopping weekends', 'Unexpected expenses like a broken phone', 'Paying only entertainment bills', 'Investing in meme coins'], answer: 1, tip: 'A small cash cushion means you do not have to swipe credit in a panic.' },
+    { q: 'If something is on sale for 20% off a $50 item, you pay…', choices: ['$20', '$30', '$40', '$45'], answer: 2, tip: '20% of $50 is $10. $50 minus $10 equals $40.' },
+    { q: 'What is a healthy habit with subscriptions?', choices: ['Keep every free trial forever', 'Never check what you are paying monthly', 'Review and cancel ones you do not use', 'Share passwords publicly to split costs'], answer: 2, tip: 'Tiny monthly charges add up. Audit subscriptions the way MoneyBot dodges fees.' },
+    { q: 'Saving $5 a week for a year is about…', choices: ['$60', '$120', '$260', '$520'], answer: 2, tip: '$5 times 52 weeks is about $260. Small, consistent deposits beat rare big ones.' },
+    { q: 'Living below your means means…', choices: ['Spending more than you earn', 'Spending less than you earn and saving the rest', 'Only using credit cards', 'Never buying anything fun'], answer: 1, tip: 'Earn more than you spend. That gap can become savings, goals, and freedom.' },
+    { q: 'A debit card typically spends…', choices: ['Money from your own bank account', 'Unlimited borrowed money', 'Only gift-card balances', 'Your friend’s account automatically'], answer: 0, tip: 'Debit is your money. Credit is borrowed money.' },
+    { q: 'What is the main risk of only making minimum credit card payments?', choices: ['Your card gets prettier', 'Interest can make the balance grow for a long time', 'Stores give you free products', 'Your savings interest doubles'], answer: 1, tip: 'Minimums keep the account okay, but interest can turn a small purchase into a long, expensive run.' },
+    { q: 'Pay yourself first means…', choices: ['Buy yourself something before any bills', 'Save a set amount as soon as you get paid', 'Skip lunch to afford extras', 'Ask parents for every purchase'], answer: 1, tip: 'Treat savings like a non-negotiable bill. Automate it if you can.' },
+    { q: 'Which choice builds wealth over time best?', choices: ['Only impulse buys', 'Regular saving or investing', 'Ignoring bank statements', 'Maxing every credit card'], answer: 1, tip: 'Small, steady deposits compound.' },
+    { q: 'Which is a want, not a need?', choices: ['Rent or basic housing costs', 'Concert merch you really want', 'Required school textbooks', 'Urgent medicine'], answer: 1, tip: 'Wants are fine. Plan for them so they do not crowd out needs.' },
+    { q: 'If income is $100 and needs are $70, leftover is…', choices: ['$170', '$70', '$30', '$0'], answer: 2, tip: '100 minus 70 equals 30 for wants and savings.' },
+    { q: 'Why track spending?', choices: ['To feel guilty always', 'To see where money goes', 'Banks require public posts', 'It deletes subscriptions'], answer: 1, tip: 'You cannot improve what you do not see.' },
+    { q: 'Inflation generally means…', choices: ['Prices rise over time', 'Your cash multiplies overnight', 'Debt disappears', 'Stores ban sales'], answer: 0, tip: 'The same dollar buys a bit less later, so saving early helps.' },
+    { q: 'A good first money goal for teens is often…', choices: ['Buy every drop', 'A small emergency fund plus a goal savings pot', 'Ignore banks forever', 'Only use cash advances'], answer: 1, tip: 'Start small, stay consistent, grow goals.' },
+    { q: 'Gross pay vs net pay: net pay is…', choices: ['Your pay before any deductions', 'What you take home after taxes and deductions', 'Only overtime money', 'A type of credit score'], answer: 1, tip: 'Budget with net pay, the money that actually lands in your account.' },
+    { q: 'A piggy bank (or savings jar) helps most when you…', choices: ['Never look at it', 'Put money in regularly toward a goal', 'Empty it for every snack', 'Hide it and forget the goal'], answer: 1, tip: 'Regular deposits beat one-time dumps.' },
+    { q: 'Opportunity cost means…', choices: ['A bank fee for opening an account', 'What you give up when you choose something else', 'Free shipping on every order', 'A type of coupon'], answer: 1, tip: 'Every spend choice has a tradeoff. Pick on purpose.' },
+    { q: 'Which is usually the safer place for short-term emergency cash?', choices: ['A savings account you can access', 'A brand-new crypto coin', 'Lending it to a friend with no plan', 'Under a mattress with no tracking'], answer: 0, tip: 'Keep emergency cash somewhere safe and reachable.' },
+    { q: 'If a $20 shirt is 50% off, the sale price is…', choices: ['$5', '$10', '$15', '$20'], answer: 1, tip: 'Half of 20 is 10.' },
+    { q: 'Overdraft fees often happen when you…', choices: ['Save money in a CD', 'Spend more than your account balance', 'Pay a bill early', 'Compare two prices'], answer: 1, tip: 'Track your balance. Overdrafts can turn a small purchase into an expensive oops.' },
+    { q: 'A unit price helps you…', choices: ['Find which package gives more value per ounce or item', 'Raise your credit limit', 'Skip reading labels forever', 'Avoid all taxes'], answer: 0, tip: 'Bigger packages are not always cheaper. Check the unit price.' },
+    { q: 'Diversifying savings or investments usually means…', choices: ['Putting everything into one stock', 'Spreading money across different options', 'Only holding cash forever', 'Never checking balances'], answer: 1, tip: 'Spreading risk can protect you if one option dips.' },
+    { q: 'A scam red flag is often…', choices: ['A teacher explaining budgets', 'Someone rushing you to send money or share passwords', 'A posted store sale flyer', 'A bank statement in your app'], answer: 1, tip: 'Slow down. Real companies do not need your password or gift cards in a hurry.' },
+    { q: 'Compound interest is powerful because…', choices: ['You only earn once', 'You can earn interest on interest over time', 'It deletes all fees', 'It only works on credit cards'], answer: 1, tip: 'Time plus consistency makes compound interest shine.' },
+    { q: 'Which bill should you usually prioritize first?', choices: ['Optional snacks', 'Needs like housing, utilities, and due payments', 'Every wishlist item', 'Random online drops'], answer: 1, tip: 'Cover needs and due bills before wants.' },
+    { q: 'Setting a SMART money goal usually includes…', choices: ['Vague vibes only', 'A clear amount, timeline, and plan', 'Never writing it down', 'Waiting until you are rich'], answer: 1, tip: 'Specific goals are easier to hit than vague wishes.' },
+    { q: 'If you earn $15/hour and work 4 hours, before taxes you earn…', choices: ['$19', '$45', '$60', '$150'], answer: 2, tip: '15 times 4 equals 60.' },
+    { q: 'A credit score is mainly used to…', choices: ['Measure how funny you are', 'Help lenders judge borrowing risk', 'Replace your report card', 'Unlock video games'], answer: 1, tip: 'Paying on time and managing credit carefully helps your score.' },
   ];
 
   let best = Number(localStorage.getItem(STORAGE_KEY) || 0);
@@ -704,16 +640,15 @@ canvas {
 
   function makeBot() {
     return {
-      x: 86,
+      x: 92,
       y: GROUND_Y,
-      w: 44,
-      h: 52,
-      duckH: 34,
+      w: 54,
+      h: 62,
+      duckH: 42,
       vy: 0,
       grounded: true,
       ducking: false,
       jumpCount: 0,
-      blink: 0,
     };
   }
 
@@ -721,7 +656,7 @@ canvas {
     state.score = 0;
     state.speed = 6.2;
     state.frame = 0;
-    state.spawnTimer = 70;
+    state.spawnTimer = 80;
     state.obstacles = [];
     state.coins = [];
     state.particles = [];
@@ -734,7 +669,7 @@ canvas {
     state.warnShownFor = 0;
     state.clouds = Array.from({ length: 4 }, (_, i) => ({
       x: 80 + i * 220,
-      y: 36 + (i % 3) * 28,
+      y: 40 + (i % 3) * 26,
       s: 0.35 + (i % 3) * 0.15,
     }));
     state.hills = [
@@ -750,7 +685,7 @@ canvas {
   function clearPathAhead() {
     state.obstacles = state.obstacles.filter((o) => o.x > W - 40 || o.x < state.bot.x - 20);
     state.coins = state.coins.filter((c) => c.x > W - 40 || c.x < state.bot.x - 20);
-    state.spawnTimer = 90;
+    state.spawnTimer = 95;
     if (state.bot) {
       state.bot.y = GROUND_Y;
       state.bot.vy = 0;
@@ -781,11 +716,11 @@ canvas {
 
     ctx.fillStyle = 'rgba(74, 222, 128, 0.12)';
     ctx.beginPath();
-    ctx.ellipse(W - 80, 40, 120, 70, 0, 0, Math.PI * 2);
+    ctx.ellipse(W - 80, 44, 120, 70, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.fillStyle = 'rgba(230, 252, 245, 0.9)';
     ctx.beginPath();
-    ctx.ellipse(60, 90, 90, 55, 0, 0, Math.PI * 2);
+    ctx.ellipse(60, 96, 90, 55, 0, 0, Math.PI * 2);
     ctx.fill();
 
     for (const hill of state.hills) {
@@ -819,131 +754,60 @@ canvas {
     ctx.setLineDash([14, 16]);
     for (const gx of state.groundXs) {
       ctx.beginPath();
-      ctx.moveTo(gx, GROUND_Y + 16);
-      ctx.lineTo(gx + W, GROUND_Y + 16);
+      ctx.moveTo(gx, GROUND_Y + 18);
+      ctx.lineTo(gx + W, GROUND_Y + 18);
       ctx.stroke();
     }
     ctx.setLineDash([]);
   }
 
+  function drawFallbackBot(bot, ducking, x, y, w, h) {
+    roundRect(x + 6, y + h * 0.42, w - 12, h * 0.42, 12);
+    ctx.fillStyle = COLORS.white;
+    ctx.strokeStyle = COLORS.g800;
+    ctx.lineWidth = 2;
+    ctx.fill();
+    ctx.stroke();
+    roundRect(x + 4, y, w - 8, h * 0.58, 14);
+    ctx.fill();
+    ctx.stroke();
+    roundRect(x + 12, y + 12, w - 24, h * 0.32, 8);
+    ctx.fillStyle = COLORS.g700;
+    ctx.fill();
+    ctx.fillStyle = COLORS.green;
+    roundRect(x + w * 0.28, y + 16, 8, 14, 3); ctx.fill();
+    roundRect(x + w * 0.58, y + 16, 8, 14, 3); ctx.fill();
+  }
+
   function drawMoneyBot(bot, frame) {
     const ducking = bot.ducking && bot.grounded;
     const h = ducking ? bot.duckH : bot.h;
-    const w = ducking ? bot.w + 6 : bot.w;
+    const w = ducking ? bot.w + 8 : bot.w;
+    const bob = bot.grounded && !ducking ? Math.sin(frame * 0.35) * 1.8 : 0;
     const x = bot.x - w / 2;
-    const y = bot.y - h;
-    const bob = bot.grounded && !ducking ? Math.sin(frame * 0.35) * 1.5 : 0;
-    const legPhase = bot.grounded && !ducking ? Math.sin(frame * 0.45) : 0;
+    const y = bot.y - h + bob;
 
-    ctx.save();
-    ctx.translate(0, bob);
-
-    ctx.fillStyle = 'rgba(17, 94, 89, 0.15)';
+    ctx.fillStyle = 'rgba(17, 94, 89, 0.16)';
     ctx.beginPath();
-    ctx.ellipse(bot.x, GROUND_Y + 4, w * 0.45, 5, 0, 0, Math.PI * 2);
+    ctx.ellipse(bot.x, GROUND_Y + 5, w * 0.42, 5, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    if (!ducking) {
-      ctx.strokeStyle = COLORS.g700;
-      ctx.lineWidth = 4;
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(bot.x - 8, y + h - 10);
-      ctx.lineTo(bot.x - 8 - legPhase * 6, bot.y);
-      ctx.moveTo(bot.x + 8, y + h - 10);
-      ctx.lineTo(bot.x + 8 + legPhase * 6, bot.y);
-      ctx.stroke();
-    }
-
-    ctx.fillStyle = COLORS.white;
-    ctx.strokeStyle = COLORS.g800;
-    ctx.lineWidth = 2;
-    roundRect(x + 4, y + h * 0.42, w - 8, h * 0.48, 10);
-    ctx.fill();
-    ctx.stroke();
-
-    ctx.fillStyle = COLORS.green;
-    roundRect(bot.x - 6, y + h * 0.55, 12, 8, 3);
-    ctx.fill();
-
-    const hx = x + 2;
-    const hy = y + (ducking ? 2 : 0);
-    const hw = w - 4;
-    const hh = ducking ? h * 0.55 : h * 0.58;
-    roundRect(hx, hy, hw, hh, 12);
-    ctx.fillStyle = COLORS.white;
-    ctx.fill();
-    ctx.strokeStyle = COLORS.g800;
-    ctx.stroke();
-
-    const sx = hx + 6;
-    const sy = hy + 10;
-    const sw = hw - 12;
-    const sh = hh - 18;
-    roundRect(sx, sy, sw, sh, 7);
-    ctx.fillStyle = COLORS.g700;
-    ctx.fill();
-
-    const eyeOpen = bot.blink <= 0;
-    if (eyeOpen) {
-      const ew = 7, eh = 12;
-      for (const ex of [sx + sw * 0.28, sx + sw * 0.72]) {
-        roundRect(ex - ew / 2, sy + 4, ew, eh, 3);
-        ctx.fillStyle = COLORS.green;
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(22,101,52,0.35)';
-        ctx.lineWidth = 1;
-        for (let i = 0; i < 4; i++) {
-          ctx.beginPath();
-          ctx.moveTo(ex - ew / 2, sy + 6 + i * 3);
-          ctx.lineTo(ex + ew / 2, sy + 4 + i * 3);
-          ctx.stroke();
-        }
+    if (botReady) {
+      ctx.save();
+      if (ducking) {
+        ctx.translate(bot.x, bot.y);
+        ctx.scale(1.08, 0.72);
+        ctx.drawImage(botImg, -w / 2, -h - 4, w, h + 8);
+      } else {
+        const tilt = bot.grounded ? Math.sin(frame * 0.4) * 0.04 : Math.min(0.18, -bot.vy * 0.015);
+        ctx.translate(bot.x, y + h / 2);
+        ctx.rotate(tilt);
+        ctx.drawImage(botImg, -w / 2, -h / 2, w, h);
       }
-      ctx.strokeStyle = COLORS.green;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(sx + sw / 2, sy + sh - 8, 6, 0.15 * Math.PI, 0.85 * Math.PI);
-      ctx.stroke();
+      ctx.restore();
     } else {
-      ctx.strokeStyle = COLORS.green;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(sx + 6, sy + sh / 2);
-      ctx.lineTo(sx + sw / 2 - 4, sy + sh / 2);
-      ctx.moveTo(sx + sw / 2 + 4, sy + sh / 2);
-      ctx.lineTo(sx + sw - 6, sy + sh / 2);
-      ctx.stroke();
+      drawFallbackBot(bot, ducking, x, y, w, h);
     }
-
-    ctx.strokeStyle = COLORS.g800;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(bot.x, hy);
-    ctx.lineTo(bot.x, hy - 10);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(bot.x, hy - 14, 5, 0, Math.PI * 2);
-    ctx.fillStyle = COLORS.coin;
-    ctx.fill();
-    ctx.strokeStyle = COLORS.coinInk;
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    ctx.fillStyle = COLORS.coinInk;
-    ctx.font = 'bold 7px Inter, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('$', bot.x, hy - 14);
-
-    ctx.beginPath();
-    ctx.arc(hx + hw - 1, hy + hh / 2, 4, 0, Math.PI * 2);
-    ctx.fillStyle = COLORS.g300;
-    ctx.fill();
-    ctx.strokeStyle = COLORS.g800;
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-
-    ctx.restore();
   }
 
   function drawObstacle(o) {
@@ -1049,12 +913,12 @@ canvas {
   function hitBox(bot) {
     const ducking = bot.ducking && bot.grounded;
     const h = ducking ? bot.duckH : bot.h;
-    const w = ducking ? bot.w + 4 : bot.w - 8;
+    const w = ducking ? bot.w * 0.7 : bot.w * 0.55;
     return {
       x: bot.x - w / 2,
-      y: bot.y - h + 4,
+      y: bot.y - h + 10,
       w,
-      h: h - 6,
+      h: h - 14,
     };
   }
 
@@ -1072,15 +936,14 @@ canvas {
     } else if (roll < 0.78) {
       type = 'card'; w = 30; h = 56 + Math.floor(Math.random() * 16);
     } else {
-      type = 'bill'; w = 42; h = 28; yOff = 52 + Math.random() * 18;
+      type = 'bill'; w = 42; h = 28; yOff = 54 + Math.random() * 18;
     }
     state.obstacles.push({ type, x: W + 20, y: GROUND_Y - yOff, w, h });
 
     if (Math.random() < 0.55) {
       state.coins.push({
         x: W + 120 + Math.random() * 80,
-        y: GROUND_Y - 70 - Math.random() * 50,
-        r: 10,
+        y: GROUND_Y - 72 - Math.random() * 50,
         taken: false,
       });
     }
@@ -1104,7 +967,7 @@ canvas {
     if (!state.running || state.dead || state.quiz || !bot) return;
     if (bot.ducking) bot.ducking = false;
     if (bot.grounded || bot.jumpCount < 2) {
-      bot.vy = bot.grounded ? -12.2 : -10.4;
+      bot.vy = bot.grounded ? -12.4 : -10.6;
       bot.grounded = false;
       bot.jumpCount += 1;
     }
@@ -1156,7 +1019,12 @@ canvas {
       btn.type = 'button';
       btn.className = 'choice';
       btn.innerHTML = `<span class="letter">${letters[i]}</span><span>${data.choices[choiceIndex]}</span>`;
-      btn.addEventListener('click', () => answerQuiz(choiceIndex === data.answer, btn, data, order.map((ci, idx) => ({ btn: quizChoices.children[idx], correct: ci === data.answer }))));
+      btn.addEventListener('click', () => answerQuiz(
+        choiceIndex === data.answer,
+        btn,
+        data,
+        order.map((ci, idx) => ({ btn: quizChoices.children[idx], correct: ci === data.answer }))
+      ));
       quizChoices.appendChild(btn);
     });
 
@@ -1183,7 +1051,7 @@ canvas {
       quizExplain.innerHTML = `<strong>Nailed it · +${QUIZ_BONUS} pts</strong>${data.tip}`;
       burst(state.bot.x, state.bot.y - 30, COLORS.coin);
     } else {
-      quizExplain.innerHTML = `<strong>Good try — here's the idea</strong>${data.tip}`;
+      quizExplain.innerHTML = `<strong>Good try. Here is the idea</strong>${data.tip}`;
     }
 
     state.nextQuizAt = Math.floor(state.score) + quizGap(state.quizAsked, state.speed);
@@ -1221,12 +1089,11 @@ canvas {
     state.speed = 6.2 + Math.min(7.5, state.score / 180);
     state.score += dt * state.speed * 0.12;
 
-    // warn before checkpoint (scales with how big the current gap is)
     const until = state.nextQuizAt - state.score;
     const warnWindow = Math.max(70, Math.min(160, quizGap(state.quizAsked, state.speed) * 0.1));
     if (until <= warnWindow && until > 0 && state.warnShownFor !== state.nextQuizAt) {
       state.warnShownFor = state.nextQuizAt;
-      milestone.textContent = `Brain check at ${Math.floor(state.nextQuizAt)}…`;
+      milestone.textContent = `Brain check at ${Math.floor(state.nextQuizAt)}`;
       milestone.classList.add('show');
       setTimeout(() => milestone.classList.remove('show'), 1600);
     }
@@ -1261,13 +1128,10 @@ canvas {
       bot.jumpCount = 0;
     }
 
-    if (bot.blink > 0) bot.blink -= dt;
-    else if (Math.random() < 0.004) bot.blink = 8;
-
     state.spawnTimer -= dt;
     if (state.spawnTimer <= 0) {
       spawnObstacle();
-      const gap = Math.max(48, 95 - state.score / 25);
+      const gap = Math.max(50, 98 - state.score / 25);
       state.spawnTimer = gap + Math.random() * 40;
     }
 
@@ -1284,7 +1148,7 @@ canvas {
       if (!c.taken) {
         const dx = bot.x - c.x;
         const dy = (bot.y - bot.h / 2) - c.y;
-        if (dx * dx + dy * dy < 28 * 28) {
+        if (dx * dx + dy * dy < 30 * 30) {
           c.taken = true;
           state.score += 25;
           burst(c.x, c.y, COLORS.coin);
@@ -1306,9 +1170,9 @@ canvas {
     drawBackground();
     for (const c of state.coins) drawCoin(c);
     for (const o of state.obstacles) drawObstacle(o);
-    if (state.bot) drawMoneyBot(state.bot, state.frame);
-    drawParticles();
     if (!state.bot) state.bot = makeBot();
+    drawMoneyBot(state.bot, state.frame);
+    drawParticles();
   }
 
   function loop(ts) {
